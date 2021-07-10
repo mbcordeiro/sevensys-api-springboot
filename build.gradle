@@ -29,7 +29,7 @@ dependencies {
 	providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	implementation 'javax.validation:validation-api'
-
+	implementation 'io.springfox:springfox-boot-starter:3.0.0'
 }
 
 test {
