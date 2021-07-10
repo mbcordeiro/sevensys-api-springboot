@@ -7,9 +7,11 @@ import java.util.List;
 import java.util.Optional;
 
 public interface CostumerService {
-    Optional<Costumer> findByCostumerByIdOrThrow(Long id);
+    Optional<Costumer> findCostumerByIdOrThrow(Long id);
 
     List<Costumer> findAllCostumersOrThrow();
+
+    Costumer findCostumerByNameOrThrow(String name);
 
     Costumer saveCostumerOrThrow(Costumer costumer);
 

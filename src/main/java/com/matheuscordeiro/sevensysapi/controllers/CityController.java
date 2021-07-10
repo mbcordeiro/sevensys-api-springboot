@@ -1,10 +1,11 @@
 package com.matheuscordeiro.sevensysapi.controllers;
 
 import com.matheuscordeiro.sevensysapi.entities.City;
-import com.matheuscordeiro.sevensysapi.entities.Costumer;
+import java.net.URI;
 import com.matheuscordeiro.sevensysapi.services.interfaces.CityService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -28,9 +29,22 @@ public class CityController {
         return ResponseEntity.ok(cityService.findAllCitiesOrThrow());
     }
 
+    @GetMapping(value = "/name")
+    public ResponseEntity<City> getCityByName(@RequestParam String name) {
+        return ResponseEntity.ok(cityService.findCityByNameOrThrow(name));
+    }
+
+    @GetMapping(value = "/state")
+    public ResponseEntity<City> getCityByState(@RequestParam String state) {
+        return ResponseEntity.ok(cityService.findCityByStateOrThrow(state));
+    }
+
     @PostMapping
     public ResponseEntity<City> saveCity(@RequestBody @Valid City city) {
-        return ResponseEntity.ok(cityService.saveCityOrThrow(city));
+        City cityEntity = cityService.saveCityOrThrow(city);
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
+                .path("/{id}").buildAndExpand(cityEntity.getId()).toUri();
+        return ResponseEntity.created(uri).build();
     }
 
     @PutMapping("/{id}")

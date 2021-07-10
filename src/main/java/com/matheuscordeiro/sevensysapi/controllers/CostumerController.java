@@ -1,11 +1,14 @@
 package com.matheuscordeiro.sevensysapi.controllers;
 
+import com.matheuscordeiro.sevensysapi.entities.City;
 import com.matheuscordeiro.sevensysapi.entities.Costumer;
 import com.matheuscordeiro.sevensysapi.services.interfaces.CostumerService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
+import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -19,7 +22,7 @@ public class CostumerController {
 
     @GetMapping("{id}")
     public  ResponseEntity<Costumer> getCostumerById(@PathVariable Long id) {
-        return ResponseEntity.ok(costumerService.findByCostumerByIdOrThrow(id).get());
+        return ResponseEntity.ok(costumerService.findCostumerByIdOrThrow(id).get());
     }
 
     @GetMapping
@@ -27,9 +30,17 @@ public class CostumerController {
         return ResponseEntity.ok(costumerService.findAllCostumersOrThrow());
     }
 
+    @GetMapping(value = "/email")
+    public ResponseEntity<Costumer> getCostumerByName(@RequestParam String name) {
+        return ResponseEntity.ok(costumerService.findCostumerByNameOrThrow(name));
+    }
+
     @PostMapping
     public ResponseEntity<Costumer> saveCostumer(@RequestBody @Valid Costumer costumer) {
-        return ResponseEntity.ok(costumerService.saveCostumerOrThrow(costumer));
+        Costumer costumerEntity = costumerService.saveCostumerOrThrow(costumer);
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
+                .path("/{id}").buildAndExpand(costumerEntity.getId()).toUri();
+        return ResponseEntity.created(uri).build();
     }
 
     @PutMapping("/{id}")

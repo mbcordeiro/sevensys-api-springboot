@@ -22,9 +22,9 @@ public class CostumerServiceImpl implements CostumerService {
     }
 
     @Override
-    public Optional<Costumer> findByCostumerByIdOrThrow(Long id)  {
+    public Optional<Costumer> findCostumerByIdOrThrow(Long id)  {
         try {
-            return findByCostumerById(id);
+            return findCostumerById(id);
         } catch (Exception e) {
             throw new BusinessException("Ocorreu um erro inesperado ao obter os cliente");
         }
@@ -36,6 +36,15 @@ public class CostumerServiceImpl implements CostumerService {
             return findAllCostumers();
         } catch (BusinessException e) {
             throw new BusinessException("Ocorreu um erro inesperado ao obter os clientes");
+        }
+    }
+
+    @Override
+    public Costumer findCostumerByNameOrThrow(String name) {
+        try {
+            return findCostumerByName(name);
+        } catch (BusinessException e) {
+            throw new BusinessException("Ocorreu um erro inesperado ao obter o cliente por nome");
         }
     }
 
@@ -66,13 +75,17 @@ public class CostumerServiceImpl implements CostumerService {
         }
     }
 
-    private Optional<Costumer> findByCostumerById(Long id) {
+    private Optional<Costumer> findCostumerById(Long id) {
         return costumerRepository.findById(id);
     }
 
     @Transactional(readOnly = true)
     private List<Costumer> findAllCostumers() {
         return costumerRepository.findAll();
+    }
+
+    private Costumer findCostumerByName(String name) {
+        return costumerRepository.findCostumerByName(name);
     }
 
     @Transactional

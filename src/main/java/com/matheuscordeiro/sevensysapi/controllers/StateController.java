@@ -4,8 +4,10 @@ import com.matheuscordeiro.sevensysapi.entities.State;
 import com.matheuscordeiro.sevensysapi.services.interfaces.StateService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
+import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -29,7 +31,10 @@ public class StateController {
 
     @PostMapping
     public ResponseEntity<State> saveState(@RequestBody @Valid State state) {
-        return ResponseEntity.ok(stateService.saveStateOrThrow(state));
+        State stateEntity = stateService.saveStateOrThrow(state);
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
+                .path("/{id}").buildAndExpand(stateEntity.getId()).toUri();
+        return ResponseEntity.created(uri).build();
     }
 
     @PutMapping("/{id}")

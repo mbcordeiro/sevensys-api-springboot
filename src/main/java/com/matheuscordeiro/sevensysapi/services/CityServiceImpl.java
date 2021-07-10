@@ -41,6 +41,24 @@ public class CityServiceImpl implements CityService {
     }
 
     @Override
+    public City findCityByNameOrThrow(String name) {
+        try {
+            return findCityByName(name);
+        } catch (BusinessException e) {
+            throw new BusinessException("Ocorreu um erro inesperado ao obter a cidade por nome");
+        }
+    }
+
+    @Override
+    public City findCityByStateOrThrow(String state) {
+        try {
+            return findCityByState(state);
+        } catch (BusinessException e) {
+            throw new BusinessException("Ocorreu um erro inesperado ao obter a cidade por nome do estado");
+        }
+    }
+
+    @Override
     public City saveCityOrThrow(City city) {
         try {
             return saveCity(city);
@@ -74,6 +92,14 @@ public class CityServiceImpl implements CityService {
     @Transactional(readOnly = true)
     private List<City> findAllCities() {
         return cityRepository.findAll();
+    }
+
+    private City findCityByName(String name) {
+        return cityRepository.findCityByName(name);
+    }
+
+    private City findCityByState(String state) {
+        return cityRepository.findCityByState(state);
     }
 
     @Transactional

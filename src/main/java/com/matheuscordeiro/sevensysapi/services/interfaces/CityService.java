@@ -11,6 +11,10 @@ public interface CityService {
 
     List<City> findAllCitiesOrThrow();
 
+    City findCityByNameOrThrow(String name);
+
+    City findCityByStateOrThrow(String state);
+
     City saveCityOrThrow(City city);
 
     City updateCityOrThrow(Long id, City city);
