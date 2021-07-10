@@ -6,6 +6,7 @@ import com.matheuscordeiro.sevensysapi.exceptions.ObjectNotFoundException;
 import com.matheuscordeiro.sevensysapi.repositories.CostumerRepository;
 import com.matheuscordeiro.sevensysapi.services.interfaces.CostumerService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -69,14 +70,17 @@ public class CostumerServiceImpl implements CostumerService {
         return costumerRepository.findById(id);
     }
 
+    @Transactional(readOnly = true)
     private List<Costumer> findAllCostumers() {
         return costumerRepository.findAll();
     }
 
+    @Transactional
     private Costumer saveCostumer(Costumer costumer) {
         return costumerRepository.save(costumer);
     }
 
+    @Transactional
     private Costumer updateCostumer(Long id, Costumer costumer) throws ObjectNotFoundException {
         verifyIfExists(id);
         costumer.setId(id);

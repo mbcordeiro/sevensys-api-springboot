@@ -6,6 +6,7 @@ import com.matheuscordeiro.sevensysapi.exceptions.ObjectNotFoundException;
 import com.matheuscordeiro.sevensysapi.repositories.CityRepository;
 import com.matheuscordeiro.sevensysapi.services.interfaces.CityService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -70,14 +71,17 @@ public class CityServiceImpl implements CityService {
         return cityRepository.findById(id);
     }
 
+    @Transactional(readOnly = true)
     private List<City> findAllCities() {
         return cityRepository.findAll();
     }
 
+    @Transactional
     private City saveCity(City city) {
         return cityRepository.save(city);
     }
 
+    @Transactional
     private City updateCity(Long id, City city) throws ObjectNotFoundException {
         verifyIfExists(id);
         city.setId(id);

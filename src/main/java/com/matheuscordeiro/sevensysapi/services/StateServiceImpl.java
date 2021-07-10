@@ -6,6 +6,7 @@ import com.matheuscordeiro.sevensysapi.exceptions.ObjectNotFoundException;
 import com.matheuscordeiro.sevensysapi.repositories.StateRepository;
 import com.matheuscordeiro.sevensysapi.services.interfaces.StateService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -69,14 +70,17 @@ public class StateServiceImpl implements StateService {
         return stateRepository.findById(id);
     }
 
+    @Transactional(readOnly = true)
     public List<State> findAllStates() {
         return stateRepository.findAll();
     }
 
+    @Transactional
     public State saveState(State state) {
         return stateRepository.save(state);
     }
 
+    @Transactional
     public State updateState(Long id, State state) throws ObjectNotFoundException {
         verifyIfExists(id);
         state.setId(id);
