@@ -35,7 +35,7 @@ public class Costumer {
     @Column(nullable = false)
     private Integer age;
 
-    @OneToOne
-    @JoinColumn(name = "city_id", referencedColumnName = "id")
+    @ManyToOne
+    @JoinColumn(name = "cities_id")
     private City city;
 }

@@ -1,5 +1,6 @@
 package com.matheuscordeiro.sevensysapi.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sun.istack.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -7,6 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Data
@@ -26,6 +28,7 @@ public class City {
     @JoinColumn(name = "state_id")
     private State state;
 
-    @OneToOne(mappedBy = "city")
-    private Costumer costumer;
+    @JsonIgnore
+    @OneToMany(mappedBy = "city")
+    private List<Costumer> costumers;
 }

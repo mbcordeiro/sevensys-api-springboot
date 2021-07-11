@@ -3,6 +3,7 @@ package com.matheuscordeiro.sevensysapi.controllers;
 import com.matheuscordeiro.sevensysapi.entities.City;
 import com.matheuscordeiro.sevensysapi.entities.Costumer;
 import com.matheuscordeiro.sevensysapi.services.interfaces.CostumerService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -37,10 +38,7 @@ public class CostumerController {
 
     @PostMapping
     public ResponseEntity<Costumer> saveCostumer(@RequestBody @Valid Costumer costumer) {
-        Costumer costumerEntity = costumerService.saveCostumerOrThrow(costumer);
-        URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
-                .path("/{id}").buildAndExpand(costumerEntity.getId()).toUri();
-        return ResponseEntity.created(uri).build();
+        return new ResponseEntity(costumerService.saveCostumerOrThrow(costumer), HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")

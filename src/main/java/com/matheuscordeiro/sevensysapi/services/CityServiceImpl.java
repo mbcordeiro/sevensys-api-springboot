@@ -5,6 +5,7 @@ import com.matheuscordeiro.sevensysapi.exceptions.BusinessException;
 import com.matheuscordeiro.sevensysapi.exceptions.ObjectNotFoundException;
 import com.matheuscordeiro.sevensysapi.repositories.CityRepository;
 import com.matheuscordeiro.sevensysapi.services.interfaces.CityService;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -12,11 +13,12 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@EnableJpaRepositories(basePackages = "com.matheuscordeiro.sevensysapi.repositories")
 public class CityServiceImpl implements CityService {
 
     private static final String CITY = "Cidade";
 
-    private CityRepository cityRepository;
+    private final CityRepository cityRepository;
 
     public CityServiceImpl(CityRepository cityRepository) {
         this.cityRepository = cityRepository;
@@ -116,7 +118,7 @@ public class CityServiceImpl implements CityService {
 
     private void deleteCityById(Long id) throws ObjectNotFoundException {
         verifyIfExists(id);
-        deleteCityById(id);
+        cityRepository.deleteById(id);
     }
 
     private City verifyIfExists(Long id) throws ObjectNotFoundException {

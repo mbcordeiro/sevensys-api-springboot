@@ -3,6 +3,7 @@ package com.matheuscordeiro.sevensysapi.controllers;
 import com.matheuscordeiro.sevensysapi.entities.City;
 import java.net.URI;
 import com.matheuscordeiro.sevensysapi.services.interfaces.CityService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -41,10 +42,7 @@ public class CityController {
 
     @PostMapping
     public ResponseEntity<City> saveCity(@RequestBody @Valid City city) {
-        City cityEntity = cityService.saveCityOrThrow(city);
-        URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
-                .path("/{id}").buildAndExpand(cityEntity.getId()).toUri();
-        return ResponseEntity.created(uri).build();
+        return new ResponseEntity(cityService.saveCityOrThrow(city), HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")

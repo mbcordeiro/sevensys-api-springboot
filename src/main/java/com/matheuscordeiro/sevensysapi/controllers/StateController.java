@@ -2,6 +2,7 @@ package com.matheuscordeiro.sevensysapi.controllers;
 
 import com.matheuscordeiro.sevensysapi.entities.State;
 import com.matheuscordeiro.sevensysapi.services.interfaces.StateService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -31,10 +32,7 @@ public class StateController {
 
     @PostMapping
     public ResponseEntity<State> saveState(@RequestBody @Valid State state) {
-        State stateEntity = stateService.saveStateOrThrow(state);
-        URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
-                .path("/{id}").buildAndExpand(stateEntity.getId()).toUri();
-        return ResponseEntity.created(uri).build();
+        return new ResponseEntity(stateService.saveStateOrThrow(state), HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")

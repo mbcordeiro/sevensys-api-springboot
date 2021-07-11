@@ -15,7 +15,7 @@ import java.util.Optional;
 public class StateServiceImpl implements StateService {
     private static final String STATE = "Estado";
 
-    private StateRepository stateRepository;
+    private final StateRepository stateRepository;
 
     public StateServiceImpl(StateRepository stateRepository) {
         this.stateRepository = stateRepository;

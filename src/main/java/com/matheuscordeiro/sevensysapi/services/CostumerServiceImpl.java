@@ -15,7 +15,7 @@ import java.util.Optional;
 public class CostumerServiceImpl implements CostumerService {
     private static final String COSTUMER = "Cliente";
 
-    private CostumerRepository costumerRepository;
+    private final CostumerRepository costumerRepository;
 
     public CostumerServiceImpl(CostumerRepository costumerRepository) {
         this.costumerRepository = costumerRepository;
