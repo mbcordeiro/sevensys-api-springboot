@@ -5,7 +5,6 @@ import com.matheuscordeiro.sevensysapi.exceptions.BusinessException;
 import com.matheuscordeiro.sevensysapi.exceptions.ObjectNotFoundException;
 import com.matheuscordeiro.sevensysapi.repositories.CityRepository;
 import com.matheuscordeiro.sevensysapi.services.interfaces.CityService;
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -13,7 +12,6 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-@EnableJpaRepositories(basePackages = "com.matheuscordeiro.sevensysapi.repositories")
 public class CityServiceImpl implements CityService {
 
     private static final String CITY = "Cidade";

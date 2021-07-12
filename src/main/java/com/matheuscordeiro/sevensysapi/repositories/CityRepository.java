@@ -8,6 +8,10 @@ import org.springframework.data.repository.query.Param;
 public interface CityRepository extends JpaRepository<City, Long> {
     City findCityByName(String name);
 
-    @Query(value = "SELECT city FROM City city JOIN FETCH city.id_state state WHERE state.name = :state")
-    City findCityByState(@Param("state") String state);
+    @Query(value = "SELECT city.id, city.name, state.id as state_id " +
+            "FROM city " +
+            "INNER JOIN state " +
+            "ON state.id = city.state_id " +
+            "WHERE state.name = :stateName", nativeQuery = true)
+    City findCityByState(@Param("stateName") String stateName);
 }
