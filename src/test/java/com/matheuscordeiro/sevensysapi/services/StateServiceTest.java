@@ -36,42 +36,42 @@ public class StateServiceTest {
     @DisplayName("Should get a state by id")
     public void getByIdTest(){
         Long id = 1l;
-        State book = createValidState();
-        book.setId(id);
+        State state = createValidState();
+        state.setId(id);
 
-        when(stateRepository.findById(id)).thenReturn(Optional.of(book));
+        when(stateRepository.findById(id)).thenReturn(Optional.of(state));
 
-        Optional<State> foundState = stateService.findByStateById(id);
+        Optional<State> foundState = stateService.findByStateByIdOrThrow(id);
 
         assertThat( foundState.isPresent() ).isTrue();
         assertThat( foundState.get().getId()).isEqualTo(id);
-        assertThat( foundState.get().getName()).isEqualTo(book.getName());
-        assertThat( foundState.get().getUf()).isEqualTo(book.getUf());
+        assertThat( foundState.get().getName()).isEqualTo(state.getName());
+        assertThat( foundState.get().getUf()).isEqualTo(state.getUf());
     }
 
     @Test
     @DisplayName("Should get all a states")
-    public void findBookTest(){
+    public void findStatesTest(){
         State state = createValidState();
 
         List<State> listState = Arrays.asList(state);
         when(stateRepository.findAll()).thenReturn(listState);
 
-        List<State> resultState = stateService.findAllStates();
+        List<State> resultState = stateService.findAllStatesOrThrow();
 
         assertThat(resultState.get(0).getName()).isEqualTo(listState.get(0).getName());
         assertThat(resultState.get(0).getUf()).isEqualTo(listState.get(0).getUf());
     }
 
     @Test
-    @DisplayName("Should save a state")
+    @DisplayName("Should save a state.")
     public void saveStateTest() {
         State state = createValidState();
         when(stateRepository.save(state)).thenReturn(
                 state.builder().id(1l).name("Bahia").uf("BA").build()
         );
 
-        State savedState = stateService.saveState(state);
+        State savedState = stateService.saveStateOrThrow(state);
 
         assertThat(savedState.getId()).isNotNull();
         assertThat(savedState.getName()).isEqualTo("Bahia");
@@ -79,8 +79,8 @@ public class StateServiceTest {
     }
 
     @Test
-    @DisplayName("Should update a state")
-    public void updateBookTest() throws ObjectNotFoundException {
+    @DisplayName("Should update a state.")
+    public void updateStateTest() throws ObjectNotFoundException {
         long id = 1l;
 
         State updatingState = State.builder().id(id).build();
@@ -89,7 +89,7 @@ public class StateServiceTest {
         updatedState.setId(id);
         when(stateRepository.save(updatingState)).thenReturn(updatedState);
 
-        State state = stateService.updateState(updatedState.getId(), updatingState);
+        State state = stateService.updateStateOrThrow(updatingState.getId(), updatingState);
 
         assertThat(state.getId()).isEqualTo(state.getId());
         assertThat(state.getName()).isEqualTo(updatedState.getName());
@@ -98,10 +98,10 @@ public class StateServiceTest {
 
     @Test
     @DisplayName("Should delete a state.")
-    public void deleteBookTest(){
+    public void deleteStateTest(){
         State state = State.builder().id(1l).build();
 
-        org.junit.jupiter.api.Assertions.assertDoesNotThrow( () -> stateService.deleteStateById(state.getId()) );
+        org.junit.jupiter.api.Assertions.assertDoesNotThrow( () -> stateService.deleteStateByIdOrThrow(state.getId()) );
 
         Mockito.verify(stateRepository, Mockito.times(1)).deleteById(state.getId());
     }

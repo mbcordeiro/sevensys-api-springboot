@@ -41,7 +41,7 @@ public class StateControllerTest {
 
     @Test
     @DisplayName("Should get by id state.")
-    public void getBookByIdTest() throws Exception{
+    public void getStateByIdTest() throws Exception{
         Long id = 1l;
 
         State state = State.builder()
@@ -65,7 +65,7 @@ public class StateControllerTest {
 
     @Test
     @DisplayName("Should get all states.")
-    public void getBooksTest() throws Exception{
+    public void getStatesTest() throws Exception{
         Long id = 1l;
 
         State state = State.builder()
@@ -89,7 +89,7 @@ public class StateControllerTest {
 
     @Test
     @DisplayName("Should create a state")
-    public void createBookTest() throws Exception {
+    public void createStateTest() throws Exception {
         State savedState = createNewState();
 
         BDDMockito.given(stateService.saveStateOrThrow(Mockito.any(State.class))).willReturn(savedState);
@@ -110,7 +110,7 @@ public class StateControllerTest {
 
     @Test
     @DisplayName("Should update a state")
-    public void updateBookTest() throws Exception{
+    public void updateStateTest() throws Exception{
         Long id = 10L;
         String json = new ObjectMapper().writeValueAsString(createNewState());
         State updatingState = createNewState();
@@ -129,7 +129,7 @@ public class StateControllerTest {
 
     @Test
     @DisplayName("Should delete a book")
-    public void deleteBookTest() throws Exception {
+    public void deleteStateTest() throws Exception {
         BDDMockito.given(stateService.findByStateByIdOrThrow(Mockito.anyLong())).willReturn(Optional.of(State.builder().id(1L).build()));
         MockHttpServletRequestBuilder request = MockMvcRequestBuilders
                 .delete(STATE_API.concat("/" + 1))

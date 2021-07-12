@@ -69,25 +69,25 @@ public class StateServiceImpl implements StateService {
         }
     }
 
-    public Optional<State> findByStateById(Long id) {
+    private Optional<State> findByStateById(Long id) {
         LOGGER.info("Buscando estado por id na base de dados.");
         return stateRepository.findById(id);
     }
 
     @Transactional(readOnly = true)
-    public List<State> findAllStates() {
+    private List<State> findAllStates() {
         LOGGER.info("Buscando todos os estados na base de dados.");
         return stateRepository.findAll();
     }
 
     @Transactional
-    public State saveState(State state) {
+    private State saveState(State state) {
         LOGGER.info("Salvando estado na base de dados.");
         return stateRepository.save(state);
     }
 
     @Transactional
-    public State updateState(Long id, State state) throws ObjectNotFoundException {
+    private State updateState(Long id, State state) throws ObjectNotFoundException {
         verifyIfExists(id);
         LOGGER.info("Atualizando estado na base de dados.");
         state.setId(id);
@@ -95,7 +95,7 @@ public class StateServiceImpl implements StateService {
 
     }
 
-    public void deleteStateById(Long id) throws ObjectNotFoundException {
+    private void deleteStateById(Long id) throws ObjectNotFoundException {
         verifyIfExists(id);
         LOGGER.info("Deletando estado na base de dados.");
         stateRepository.deleteById(id);
