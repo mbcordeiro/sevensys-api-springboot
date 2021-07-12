@@ -31,7 +31,7 @@ public class CostumerController {
         return ResponseEntity.ok(costumerService.findAllCostumersOrThrow());
     }
 
-    @GetMapping(value = "/email")
+    @GetMapping(value = "/name")
     public ResponseEntity<Costumer> getCostumerByName(@RequestParam String name) {
         return ResponseEntity.ok(costumerService.findCostumerByNameOrThrow(name));
     }

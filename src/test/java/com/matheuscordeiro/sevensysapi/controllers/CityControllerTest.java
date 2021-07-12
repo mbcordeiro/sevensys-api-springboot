@@ -155,7 +155,7 @@ public class CityControllerTest {
     }
 
     @Test
-    @DisplayName("Should delete a book")
+    @DisplayName("Should delete a city")
     public void deleteCityTest() throws Exception {
         BDDMockito.given(cityService.findCityByIdOrThrow(Mockito.anyLong())).willReturn(Optional.of(City.builder().id(1L).build()));
         MockHttpServletRequestBuilder request = MockMvcRequestBuilders

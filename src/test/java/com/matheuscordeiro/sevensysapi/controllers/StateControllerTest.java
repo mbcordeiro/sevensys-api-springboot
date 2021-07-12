@@ -128,7 +128,7 @@ public class StateControllerTest {
     }
 
     @Test
-    @DisplayName("Should delete a book")
+    @DisplayName("Should delete a city")
     public void deleteStateTest() throws Exception {
         BDDMockito.given(stateService.findByStateByIdOrThrow(Mockito.anyLong())).willReturn(Optional.of(State.builder().id(1L).build()));
         MockHttpServletRequestBuilder request = MockMvcRequestBuilders
